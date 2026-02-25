@@ -18,6 +18,7 @@ package com.alibaba.cloud.ai.dataagent.service.graph;
 import com.alibaba.cloud.ai.dataagent.dto.GraphRequest;
 import com.alibaba.cloud.ai.graph.exception.GraphRunnerException;
 import com.alibaba.cloud.ai.dataagent.vo.GraphNodeResponse;
+import com.alibaba.cloud.ai.graph.state.StateSnapshot;
 import org.springframework.http.codec.ServerSentEvent;
 import reactor.core.publisher.Sinks;
 
@@ -49,4 +50,5 @@ public interface GraphService {
 	 */
 	void stopStreamProcessing(String threadId);
 
+	StateSnapshot getGraphState(String threadId);
 }
