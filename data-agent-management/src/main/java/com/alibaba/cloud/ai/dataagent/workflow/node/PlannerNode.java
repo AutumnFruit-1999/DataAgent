@@ -18,6 +18,7 @@ package com.alibaba.cloud.ai.dataagent.workflow.node;
 import com.alibaba.cloud.ai.dataagent.dto.schema.SchemaDTO;
 import com.alibaba.cloud.ai.dataagent.enums.TextType;
 import com.alibaba.cloud.ai.dataagent.dto.planner.Plan;
+import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -45,7 +46,7 @@ import static com.alibaba.cloud.ai.dataagent.constant.Constant.*;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class PlannerNode implements NodeAction {
+public class PlannerNode extends OutputConstant implements NodeAction {
 
 	private final LlmService llmService;
 
@@ -125,4 +126,8 @@ public class PlannerNode implements NodeAction {
 			.format("**USER FEEDBACK (CRITICAL)**: %s\n\n**Must incorporate this feedback.**", validationError) : "";
 	}
 
+	@Override
+	public String getOutputConstant() {
+		return PLANNER_NODE_OUTPUT;
+	}
 }

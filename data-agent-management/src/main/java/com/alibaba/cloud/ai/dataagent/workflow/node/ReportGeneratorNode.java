@@ -22,6 +22,7 @@ import com.alibaba.cloud.ai.dataagent.prompt.PromptHelper;
 import com.alibaba.cloud.ai.dataagent.service.llm.LlmService;
 import com.alibaba.cloud.ai.dataagent.service.prompt.UserPromptService;
 import com.alibaba.cloud.ai.dataagent.enums.TextType;
+import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -54,7 +55,7 @@ import static com.alibaba.cloud.ai.dataagent.constant.Constant.*;
  */
 @Slf4j
 @Component
-public class ReportGeneratorNode implements NodeAction {
+public class ReportGeneratorNode extends OutputConstant implements NodeAction {
 
 	private final LlmService llmService;
 
@@ -240,4 +241,8 @@ public class ReportGeneratorNode implements NodeAction {
 		return sb.toString();
 	}
 
+	@Override
+	public String getOutputConstant() {
+		return RESULT;
+	}
 }

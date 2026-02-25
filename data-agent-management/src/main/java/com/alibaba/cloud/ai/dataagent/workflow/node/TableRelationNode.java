@@ -43,6 +43,7 @@ import com.alibaba.cloud.ai.dataagent.util.ChatResponseUtil;
 import com.alibaba.cloud.ai.dataagent.util.DatabaseUtil;
 import com.alibaba.cloud.ai.dataagent.util.FluxUtil;
 import com.alibaba.cloud.ai.dataagent.util.StateUtil;
+import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -76,7 +77,7 @@ import reactor.core.publisher.Flux;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class TableRelationNode implements NodeAction {
+public class TableRelationNode extends OutputConstant implements NodeAction {
 
 	private final SchemaService schemaService;
 
@@ -250,4 +251,8 @@ public class TableRelationNode implements NodeAction {
 		}
 	}
 
+	@Override
+	public String getOutputConstant() {
+		return TABLE_RELATION_OUTPUT+":"+DB_DIALECT_TYPE+":"+TABLE_RELATION_RETRY_COUNT+":"+TABLE_RELATION_EXCEPTION_OUTPUT;
+	}
 }

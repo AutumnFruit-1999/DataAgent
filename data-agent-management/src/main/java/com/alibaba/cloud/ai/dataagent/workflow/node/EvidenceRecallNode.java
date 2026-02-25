@@ -25,6 +25,7 @@ import com.alibaba.cloud.ai.dataagent.prompt.PromptHelper;
 import com.alibaba.cloud.ai.dataagent.service.llm.LlmService;
 import com.alibaba.cloud.ai.dataagent.service.vectorstore.AgentVectorStoreService;
 import com.alibaba.cloud.ai.dataagent.util.*;
+import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -48,7 +49,7 @@ import static com.alibaba.cloud.ai.dataagent.constant.Constant.*;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class EvidenceRecallNode implements NodeAction {
+public class EvidenceRecallNode extends OutputConstant implements NodeAction {
 
 	private final LlmService llmService;
 
@@ -359,5 +360,8 @@ public class EvidenceRecallNode implements NodeAction {
 		}
 		return null;
 	}
-
+	@Override
+	public String getOutputConstant() {
+		return EVIDENCE;
+	}
 }

@@ -16,6 +16,7 @@
 package com.alibaba.cloud.ai.dataagent.workflow.node;
 
 import com.alibaba.cloud.ai.dataagent.dto.schema.SchemaDTO;
+import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -38,7 +39,7 @@ import static com.alibaba.cloud.ai.dataagent.constant.Constant.*;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class FeasibilityAssessmentNode implements NodeAction {
+public class FeasibilityAssessmentNode extends OutputConstant implements NodeAction {
 
 	private final LlmService llmService;
 
@@ -74,4 +75,8 @@ public class FeasibilityAssessmentNode implements NodeAction {
 		return Map.of(FEASIBILITY_ASSESSMENT_NODE_OUTPUT, generator);
 	}
 
+	@Override
+	public String getOutputConstant() {
+		return FEASIBILITY_ASSESSMENT_NODE_OUTPUT;
+	}
 }
