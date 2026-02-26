@@ -15,7 +15,6 @@
  */
 package com.alibaba.cloud.ai.dataagent.workflow.node;
 
-import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.StateGraph;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -41,7 +40,7 @@ import static com.alibaba.cloud.ai.dataagent.constant.Constant.*;
  */
 @Slf4j
 @Component
-public class PlanExecutorNode extends OutputConstant implements NodeAction {
+public class PlanExecutorNode implements NodeAction {
 
 	// Supported node types
 	private static final Set<String> SUPPORTED_NODES = Set.of(SQL_GENERATE_NODE, PYTHON_GENERATE_NODE,
@@ -185,8 +184,4 @@ public class PlanExecutorNode extends OutputConstant implements NodeAction {
 		}
 	}
 
-	@Override
-	public String getOutputConstant() {
-		return PLAN_VALIDATION_STATUS+":"+PLAN_NEXT_NODE+":"+PLAN_CURRENT_STEP+":"+PLAN_CURRENT_STEP+":"+PLAN_VALIDATION_ERROR;
-	}
 }

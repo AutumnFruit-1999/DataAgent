@@ -26,7 +26,6 @@ import com.alibaba.cloud.ai.dataagent.dto.datasource.SqlRetryDto;
 import com.alibaba.cloud.ai.dataagent.dto.prompt.SqlGenerationDTO;
 import com.alibaba.cloud.ai.dataagent.dto.schema.SchemaDTO;
 import com.alibaba.cloud.ai.dataagent.service.nl2sql.Nl2SqlService;
-import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.StateGraph;
@@ -57,7 +56,7 @@ import static com.alibaba.cloud.ai.dataagent.util.PlanProcessUtil.getCurrentExec
 @Slf4j
 @Component
 @AllArgsConstructor
-public class SqlGenerateNode extends OutputConstant implements NodeAction {
+public class SqlGenerateNode implements NodeAction {
 
 	private final Nl2SqlService nl2SqlService;
 
@@ -153,8 +152,4 @@ public class SqlGenerateNode extends OutputConstant implements NodeAction {
 		return handleRetryGenerateSql(state, null, null, executionDescription);
 	}
 
-	@Override
-	public String getOutputConstant() {
-		return SQL_GENERATE_OUTPUT;
-	}
 }

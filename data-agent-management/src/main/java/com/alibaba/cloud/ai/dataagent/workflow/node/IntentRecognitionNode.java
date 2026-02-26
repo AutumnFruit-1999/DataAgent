@@ -18,7 +18,6 @@ package com.alibaba.cloud.ai.dataagent.workflow.node;
 import com.alibaba.cloud.ai.dataagent.dto.prompt.IntentRecognitionOutputDTO;
 import com.alibaba.cloud.ai.dataagent.enums.TextType;
 import com.alibaba.cloud.ai.dataagent.util.JsonParseUtil;
-import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -44,45 +43,41 @@ import static com.alibaba.cloud.ai.dataagent.constant.Constant.*;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class IntentRecognitionNode extends OutputConstant implements NodeAction {
+public class IntentRecognitionNode implements NodeAction {
 
-    private final LlmService llmService;
+	private final LlmService llmService;
 
-    private final JsonParseUtil jsonParseUtil;
+	private final JsonParseUtil jsonParseUtil;
 
-    @Override
-    public Map<String, Object> apply(OverAllState state) throws Exception {
+	@Override
+	public Map<String, Object> apply(OverAllState state) throws Exception {
 
-        // 获取用户输入
-        String userInput = StateUtil.getStringValue(state, INPUT_KEY);
-        log.info("User input for intent recognition: {}", userInput);
+		// 获取用户输入
+		String userInput = StateUtil.getStringValue(state, INPUT_KEY);
+		log.info("User input for intent recognition: {}", userInput);
 
-        String multiTurn = StateUtil.getStringValue(state, MULTI_TURN_CONTEXT, "(无)");
+		String multiTurn = StateUtil.getStringValue(state, MULTI_TURN_CONTEXT, "(无)");
 
-        // 构建意图识别提示
-        String prompt = PromptHelper.buildIntentRecognitionPrompt(multiTurn, userInput);
-        log.debug("Built intent recognition prompt as follows \n {} \n", prompt);
+		// 构建意图识别提示
+		String prompt = PromptHelper.buildIntentRecognitionPrompt(multiTurn, userInput);
+		log.debug("Built intent recognition prompt as follows \n {} \n", prompt);
 
-        // 调用LLM进行意图识别
-        Flux<ChatResponse> responseFlux = llmService.callUser(prompt);
+		// 调用LLM进行意图识别
+		Flux<ChatResponse> responseFlux = llmService.callUser(prompt);
 
-        Flux<GraphResponse<StreamingOutput>> generator = FluxUtil.createStreamingGenerator(this.getClass(), state,
-                responseFlux,
-                Flux.just(ChatResponseUtil.createResponse("正在进行意图识别..."),
-                        ChatResponseUtil.createPureResponse(TextType.JSON.getStartSign())),
-                Flux.just(ChatResponseUtil.createPureResponse(TextType.JSON.getEndSign()),
-                        ChatResponseUtil.createResponse("\n意图识别完成！")),
-                result -> {
-                    // 使用JsonParseUtil解析JSON并转换为IntentRecognitionOutputDTO对象
-                    IntentRecognitionOutputDTO intentRecognitionOutput = jsonParseUtil.tryConvertToObject(result,
-                            IntentRecognitionOutputDTO.class);
-                    return Map.of(INTENT_RECOGNITION_NODE_OUTPUT, intentRecognitionOutput);
-                });
-        return Map.of(INTENT_RECOGNITION_NODE_OUTPUT, generator);
-    }
+		Flux<GraphResponse<StreamingOutput>> generator = FluxUtil.createStreamingGenerator(this.getClass(), state,
+				responseFlux,
+				Flux.just(ChatResponseUtil.createResponse("正在进行意图识别..."),
+						ChatResponseUtil.createPureResponse(TextType.JSON.getStartSign())),
+				Flux.just(ChatResponseUtil.createPureResponse(TextType.JSON.getEndSign()),
+						ChatResponseUtil.createResponse("\n意图识别完成！")),
+				result -> {
+					// 使用JsonParseUtil解析JSON并转换为IntentRecognitionOutputDTO对象
+					IntentRecognitionOutputDTO intentRecognitionOutput = jsonParseUtil.tryConvertToObject(result,
+							IntentRecognitionOutputDTO.class);
+					return Map.of(INTENT_RECOGNITION_NODE_OUTPUT, intentRecognitionOutput);
+				});
+		return Map.of(INTENT_RECOGNITION_NODE_OUTPUT, generator);
+	}
 
-    @Override
-    public String getOutputConstant() {
-        return INTENT_RECOGNITION_NODE_OUTPUT;
-    }
 }

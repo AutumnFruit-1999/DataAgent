@@ -17,7 +17,6 @@ package com.alibaba.cloud.ai.dataagent.workflow.node;
 
 import com.alibaba.cloud.ai.dataagent.dto.prompt.QueryEnhanceOutputDTO;
 import com.alibaba.cloud.ai.dataagent.mapper.AgentDatasourceMapper;
-import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -53,7 +52,7 @@ import static com.alibaba.cloud.ai.dataagent.constant.Constant.*;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class SchemaRecallNode extends OutputConstant implements NodeAction {
+public class SchemaRecallNode implements NodeAction {
 
 	private final SchemaService schemaService;
 
@@ -151,8 +150,4 @@ public class SchemaRecallNode extends OutputConstant implements NodeAction {
 
 	}
 
-	@Override
-	public String getOutputConstant() {
-		return SCHEMA_RECALL_NODE_OUTPUT;
-	}
 }

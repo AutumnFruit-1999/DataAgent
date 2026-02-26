@@ -18,7 +18,6 @@ package com.alibaba.cloud.ai.dataagent.workflow.node;
 import com.alibaba.cloud.ai.dataagent.properties.CodeExecutorProperties;
 import com.alibaba.cloud.ai.dataagent.dto.schema.SchemaDTO;
 import com.alibaba.cloud.ai.dataagent.enums.TextType;
-import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -52,7 +51,7 @@ import static com.alibaba.cloud.ai.dataagent.constant.Constant.*;
  */
 @Slf4j
 @Component
-public class PythonGenerateNode extends OutputConstant implements NodeAction {
+public class PythonGenerateNode implements NodeAction {
 
 	private static final int SAMPLE_DATA_NUMBER = 5;
 
@@ -128,8 +127,4 @@ public class PythonGenerateNode extends OutputConstant implements NodeAction {
 		return Map.of(PYTHON_GENERATE_NODE_OUTPUT, generator);
 	}
 
-	@Override
-	public String getOutputConstant() {
-		return PYTHON_GENERATE_NODE_OUTPUT;
-	}
 }

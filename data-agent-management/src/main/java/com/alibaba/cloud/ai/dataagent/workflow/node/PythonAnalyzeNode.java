@@ -15,7 +15,6 @@
  */
 package com.alibaba.cloud.ai.dataagent.workflow.node;
 
-import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -46,7 +45,7 @@ import static com.alibaba.cloud.ai.dataagent.constant.Constant.*;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class PythonAnalyzeNode extends OutputConstant implements NodeAction {
+public class PythonAnalyzeNode implements NodeAction {
 
 	private final LlmService llmService;
 
@@ -98,8 +97,4 @@ public class PythonAnalyzeNode extends OutputConstant implements NodeAction {
 		return Map.of(PYTHON_ANALYSIS_NODE_OUTPUT, generator);
 	}
 
-	@Override
-	public String getOutputConstant() {
-		return PYTHON_ANALYSIS_NODE_OUTPUT;
-	}
 }

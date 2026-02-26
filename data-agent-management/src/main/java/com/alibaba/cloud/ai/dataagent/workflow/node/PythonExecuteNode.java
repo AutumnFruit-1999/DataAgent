@@ -18,7 +18,6 @@ package com.alibaba.cloud.ai.dataagent.workflow.node;
 import com.alibaba.cloud.ai.dataagent.enums.TextType;
 import com.alibaba.cloud.ai.dataagent.util.JsonParseUtil;
 import com.alibaba.cloud.ai.dataagent.properties.CodeExecutorProperties;
-import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -48,7 +47,7 @@ import static com.alibaba.cloud.ai.dataagent.constant.Constant.*;
  */
 @Slf4j
 @Component
-public class PythonExecuteNode extends OutputConstant implements NodeAction {
+public class PythonExecuteNode implements NodeAction {
 
 	private final CodePoolExecutorService codePoolExecutor;
 
@@ -164,8 +163,4 @@ public class PythonExecuteNode extends OutputConstant implements NodeAction {
 		}
 	}
 
-	@Override
-	public String getOutputConstant() {
-		return PYTHON_EXECUTE_NODE_OUTPUT;
-	}
 }

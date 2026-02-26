@@ -18,7 +18,6 @@ package com.alibaba.cloud.ai.dataagent.workflow.node;
 import com.alibaba.cloud.ai.dataagent.dto.prompt.QueryEnhanceOutputDTO;
 import com.alibaba.cloud.ai.dataagent.enums.TextType;
 import com.alibaba.cloud.ai.dataagent.util.*;
-import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -41,7 +40,7 @@ import static com.alibaba.cloud.ai.dataagent.constant.Constant.*;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class QueryEnhanceNode extends OutputConstant implements NodeAction {
+public class QueryEnhanceNode implements NodeAction {
 
 	private final LlmService llmService;
 
@@ -96,8 +95,4 @@ public class QueryEnhanceNode extends OutputConstant implements NodeAction {
 		return Map.of(QUERY_ENHANCE_NODE_OUTPUT, queryEnhanceOutputDTO);
 	}
 
-	@Override
-	public String getOutputConstant() {
-		return QUERY_ENHANCE_NODE_OUTPUT;
-	}
 }

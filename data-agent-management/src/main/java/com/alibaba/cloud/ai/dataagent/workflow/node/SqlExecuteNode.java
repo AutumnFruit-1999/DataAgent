@@ -44,7 +44,6 @@ import com.alibaba.cloud.ai.dataagent.util.JsonUtil;
 import com.alibaba.cloud.ai.dataagent.util.MarkdownParserUtil;
 import com.alibaba.cloud.ai.dataagent.util.PlanProcessUtil;
 import com.alibaba.cloud.ai.dataagent.util.StateUtil;
-import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.graph.GraphResponse;
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.action.NodeAction;
@@ -72,7 +71,7 @@ import reactor.core.publisher.Flux;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class SqlExecuteNode extends OutputConstant implements NodeAction {
+public class SqlExecuteNode implements NodeAction {
 
 	private final DatabaseUtil databaseUtil;
 
@@ -267,8 +266,4 @@ public class SqlExecuteNode extends OutputConstant implements NodeAction {
 		return null;
 	}
 
-	@Override
-	public String getOutputConstant() {
-		return SQL_EXECUTE_NODE_OUTPUT;
-	}
 }
