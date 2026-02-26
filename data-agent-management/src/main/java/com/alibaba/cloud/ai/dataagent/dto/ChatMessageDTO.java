@@ -23,19 +23,19 @@ import lombok.Data;
 @Data
 public class ChatMessageDTO {
 
-    private String role;
+	private String role;
 
-    private String content;
+	private String content;
 
-    private String contentHtml;
+	private String contentHtml;
 
-    private String messageType;
+	private String messageType;
 
-    private String metadata;
+	private String metadata;
 
-    /**
-     * Flag from frontend to trigger async title generation for newly created sessions.
-     */
-    private boolean titleNeeded;
+	/**
+	 * Flag from frontend to trigger async title generation for newly created sessions.
+	 */
+	private boolean titleNeeded;
 
 }

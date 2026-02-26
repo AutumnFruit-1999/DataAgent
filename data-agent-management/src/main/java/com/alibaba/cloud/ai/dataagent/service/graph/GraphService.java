@@ -51,4 +51,5 @@ public interface GraphService {
 	void stopStreamProcessing(String threadId);
 
 	StateSnapshot getGraphState(String threadId);
+
 }
