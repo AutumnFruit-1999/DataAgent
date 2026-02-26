@@ -15,8 +15,8 @@
  */
 package com.alibaba.cloud.ai.dataagent.service.graph;
 
+import com.alibaba.cloud.ai.dataagent.entity.ChatMessage;
 import com.alibaba.cloud.ai.dataagent.enums.TextType;
-import com.alibaba.cloud.ai.dataagent.workflow.OutputConstant;
 import com.alibaba.cloud.ai.dataagent.workflow.node.PlannerNode;
 import com.alibaba.cloud.ai.dataagent.dto.GraphRequest;
 import com.alibaba.cloud.ai.dataagent.service.graph.Context.MultiTurnContextManager;
@@ -57,12 +57,6 @@ public class GraphServiceImpl implements GraphService {
     private final ConcurrentHashMap<String, StreamContext> streamContextMap = new ConcurrentHashMap<>();
 
     private final MultiTurnContextManager multiTurnContextManager;
-
-    private final static String nodeClass = "com.alibaba.cloud.ai.dataagent.workflow.node";
-    private final ConcurrentHashMap<String, String> nodeBeanMap = new ConcurrentHashMap<>();
-
-    @Autowired
-    private ApplicationContext applicationContext;
 
     public GraphServiceImpl(StateGraph stateGraph, ExecutorService executorService,
                             MultiTurnContextManager multiTurnContextManager) throws GraphStateException {
@@ -125,7 +119,6 @@ public class GraphServiceImpl implements GraphService {
     public StateSnapshot getGraphState(String threadId) {
         return compiledGraph.getState(RunnableConfig.builder().threadId(threadId).build());
     }
-
     private void handleNewProcess(GraphRequest graphRequest) {
         String query = graphRequest.getQuery();
         String agentId = graphRequest.getAgentId();
@@ -288,26 +281,12 @@ public class GraphServiceImpl implements GraphService {
         }
         String node = output.node();
         String chunk = output.chunk();
-        String className = nodeClass + "." + node;
-        String outputConstant = nodeBeanMap.computeIfAbsent(className, key -> {
-            try {
-                Class<?> clazz = Class.forName(key);
-
-                if (OutputConstant.class.isAssignableFrom(clazz)) {
-                    OutputConstant bean = (OutputConstant) applicationContext.getBean(clazz);
-                    return bean.getOutputConstant();
-                }
-            } catch (Exception e) {
-                log.warn("Node class not found or not a bean: {}", node);
-            }
-            return null;
-        });
-
-
         log.debug("Received Stream output: {}", chunk);
+
         if (chunk == null || chunk.isEmpty()) {
             return;
         }
+
         // 如果是文本标记符号，则更新文本类型
         TextType originType = context.getTextType();
         TextType textType;
@@ -335,7 +314,6 @@ public class GraphServiceImpl implements GraphService {
                     .threadId(threadId)
                     .nodeName(node)
                     .text(chunk)
-                    .outPutConstant(outputConstant)
                     .textType(textType)
                     .build();
             // 检查发送是否成功，如果失败说明客户端已断开

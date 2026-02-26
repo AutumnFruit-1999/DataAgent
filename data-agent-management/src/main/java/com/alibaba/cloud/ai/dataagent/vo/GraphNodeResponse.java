@@ -27,40 +27,42 @@ import lombok.NoArgsConstructor;
 @Builder
 public class GraphNodeResponse {
 
-	private String agentId;
+    private String agentId;
 
-	private String threadId;
+    private String threadId;
 
-	// 使用Constant常量
-	private String nodeName;
+    // 使用Constant常量
+    private String nodeName;
 
-	private TextType textType;
+    private String outPutConstant;
 
-	private String text;
+    private TextType textType;
 
-	@Builder.Default
-	private boolean error = false;
+    private String text;
 
-	@Builder.Default
-	private boolean complete = false;
+    @Builder.Default
+    private boolean error = false;
 
-	public static GraphNodeResponse error(String agentId, String threadId, String text) {
-		return GraphNodeResponse.builder()
-			.agentId(agentId)
-			.threadId(threadId)
-			.text(text)
-			.error(true)
-			.textType(TextType.TEXT)
-			.build();
-	}
+    @Builder.Default
+    private boolean complete = false;
 
-	public static GraphNodeResponse complete(String agentId, String threadId) {
-		return GraphNodeResponse.builder()
-			.agentId(agentId)
-			.threadId(threadId)
-			.complete(true)
-			.textType(TextType.TEXT)
-			.build();
-	}
+    public static GraphNodeResponse error(String agentId, String threadId, String text) {
+        return GraphNodeResponse.builder()
+                .agentId(agentId)
+                .threadId(threadId)
+                .text(text)
+                .error(true)
+                .textType(TextType.TEXT)
+                .build();
+    }
+
+    public static GraphNodeResponse complete(String agentId, String threadId) {
+        return GraphNodeResponse.builder()
+                .agentId(agentId)
+                .threadId(threadId)
+                .complete(true)
+                .textType(TextType.TEXT)
+                .build();
+    }
 
 }
