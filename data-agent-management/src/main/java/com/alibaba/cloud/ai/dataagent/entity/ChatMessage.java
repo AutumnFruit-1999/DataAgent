@@ -36,6 +36,8 @@ public class ChatMessage {
 
 	private String role; // user, assistant, system
 
+	private String contentHtml;
+
 	private String content;
 
 	private String messageType; // text, sql, result, error
