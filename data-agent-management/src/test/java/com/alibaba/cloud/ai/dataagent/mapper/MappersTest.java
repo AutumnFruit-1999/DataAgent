@@ -129,6 +129,7 @@ public class MappersTest {
 		msg.setSessionId(sessionId);
 		msg.setRole("user");
 		msg.setContent("hello tc");
+		msg.setContentHtml("hello html");
 		msg.setMessageType("text");
 		int mins = chatMessageMapper.insert(msg);
 		Assertions.assertEquals(1, mins);
