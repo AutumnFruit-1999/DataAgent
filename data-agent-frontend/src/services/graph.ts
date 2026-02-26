@@ -28,6 +28,7 @@ export interface GraphNodeResponse {
   agentId: string;
   threadId: string;
   nodeName: string;
+  outPutConstant: string;
   textType: TextType;
   text: string;
   error: boolean;
