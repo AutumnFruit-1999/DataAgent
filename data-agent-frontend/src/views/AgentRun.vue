@@ -55,7 +55,10 @@
               :class="message.messageType === 'text' ? ['message-container', message.role] : ''"
             >
               <!-- HTML类型消息直接渲染 -->
-              <div v-if="message.messageType === 'html'" v-html="message.contentHtml || message.content"></div>
+              <div
+                v-if="message.messageType === 'html'"
+                v-html="message.contentHtml || message.content"
+              ></div>
               <!-- 数据集消息尝试图表渲染 -->
               <div v-else-if="message.messageType === 'result-set'" class="result-set-message">
                 <ResultSetDisplay
